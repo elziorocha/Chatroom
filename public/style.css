@@ -214,7 +214,7 @@ body {
 
     .app > .screen.active {
         margin-top: 0;
-        width: 80%;
+        width: 90%;
         height: 700px;
         position: absolute;
         top: 50%;
@@ -262,24 +262,37 @@ body {
         font-size: 30px;
     }
 
+    .chat-screen .messages .message {
+        padding: 20px;
+    }
+
+    .chat-screen .messages .message .name {
+        font-size: 25px;
+    }
+
+    .chat-screen .messages .message > div {
+        padding: 20px;
+        font-size: 26px;
+    }
+
     .chat-screen .typebox {
         height: 90px;
-        margin-top: -60px;
+        margin-top: -80px;
     }
 
     .chat-screen .typebox input {
-        height: 60px;
-        font-size: 30px;
+        height: 65px;
+        font-size: 32px;
         margin-top: 15px;
         margin-left: 10px;
-        margin-right: 10px;
+        margin-right: 15px;
     }
 
     .chat-screen .typebox button {
         margin-top: 15px;
         margin-right: 10px;
         font-size: 20px;
-        height: 70%;
-        width: 90px;
+        height: 75%;
+        width: 100px;
     }
 }
