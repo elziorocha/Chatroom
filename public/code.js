@@ -4,17 +4,8 @@
     const socket = io();
 
     let uname;
-    
-    // não está funcionando o Enter para enviar o input do usuário e da mensagem
-    let input = document.querySelector('input');
 
-    input.addEventListener('keyup', (e) => {
-        if(e.keyCode === 13){
-            console.log(e.target.value);
-        }
-    });
-
-    app.querySelector(".join-screen #join-user").addEventListener("click", function () {
+    function joinChat() {
         let username = app.querySelector(".join-screen #username").value;
         if (username.length == 0) {
             return;
@@ -23,27 +14,39 @@
         uname = username;
         app.querySelector(".join-screen").classList.remove("active");
         app.querySelector(".chat-screen").classList.add("active");
-    });
+    }
 
-    app.querySelector(".chat-screen #send-message").addEventListener("click", function () {
-        let message = app.querySelector(".chat-screen #message-input").value;
-        if (message.length == 0) {
-            return;
+    app.querySelector(".join-screen #join-user").addEventListener("click", joinChat);
+
+    app.querySelector(".join-screen #username").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            joinChat();
         }
-        renderMessage("my", {
-            username: uname,
-            text: message
-        });
-        socket.emit("chat", {
-            username: uname,
-            text: message
-        });
-        app.querySelector(".chat-screen #message-input").value = "";
     });
 
-    app.querySelector(".chat-screen #exit-chat").addEventListener("click", function () {
-        socket.emit("exituser", uname);
-        window.location.href = window.location.href;
+    function sendMessage() {
+        let messageInput = app.querySelector(".chat-screen #message-input");
+        let message = messageInput.value.trim();
+    
+        if (message.length > 0) {
+            renderMessage("my", {
+                username: uname,
+                text: message
+            });
+            socket.emit("chat", {
+                username: uname,
+                text: message
+            });
+            messageInput.value = "";
+        }
+    }
+    
+    app.querySelector(".chat-screen #send-message").addEventListener("click", sendMessage);
+    
+    app.querySelector(".chat-screen #message-input").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
     });
 
     socket.on("update", function (update) {
